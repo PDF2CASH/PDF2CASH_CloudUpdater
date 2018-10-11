@@ -1,27 +1,27 @@
 from rest_framework import serializers
 from .models import *
 
-class SystemSerializer():
+class SystemSerializer(serializers.ModelSerializer):
     class Meta:
         model = System
         fields = '__all__'
 
-class PDFToInvoiceSerializer():
+class PDFToInvoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = PDFToInvoice
         fields = '__all__'
 
-class BISerializer():
+class BISerializer(serializers.ModelSerializer):
     class Meta:
         model = BI
         fields = '__all__'
 
-class IdentityManagementSerializer():
+class IdentityManagementSerializer(serializers.ModelSerializer):
     class Meta:
         model = IdentityManagement
         fields = '__all__'
 
-class FrontEndSerializer():
+class FrontEndSerializer(serializers.ModelSerializer):
     class Meta:
         model = FrontEnd
         fields = '__all__'
