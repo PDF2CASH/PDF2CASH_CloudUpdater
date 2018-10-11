@@ -2,16 +2,20 @@ from django.db import models
 
 
 class System(models.Model):
-    version = models.IntegerField()
+    version = models.IntegerField(unique=True)
+
 
 class PDFToInvoice(models.Model):
-    files = models.FileField(upload_to='documents/PDFToInvoice/')
+    file = models.FileField(upload_to='system/documents/PDFToInvoice/')
+
 
 class IdentityManagement(models.Model):
-    files = models.FileField(upload_to='documents/IdentityManagement/')
+    file = models.FileField(upload_to='system/documents/IdentityManagement/')
+
 
 class BI(models.Model):
-    files = models.FileField(upload_to='documents/BI/')
+    file = models.FileField(upload_to='system/documents/BI/')
+
 
 class FrontEnd(models.Model):
-    files = models.FileField(upload_to='documents/FrontEnd/')
+    file = models.FileField(upload_to='system/documents/FrontEnd/')
