@@ -1,6 +1,6 @@
 from django.test import TestCase
 import json
-from django.utils.encoding import smart_str
+
 
 class SystemTest(TestCase):
 
