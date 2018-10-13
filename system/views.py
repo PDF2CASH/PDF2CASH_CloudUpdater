@@ -1,16 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import *
-from ftplib import FTP
-import json
-import shutil
 from django.http import HttpResponse
-from django.utils.encoding import smart_str
+import zipfile
 
 
 class SystemView(APIView):
 
-    def post (self, request ,services ,format = None):
+    def post(self, request, services, format=None):
         file = request.FILES['file']
         dict_file = {}
         dict_file['file'] = file
@@ -38,20 +35,31 @@ class SystemView(APIView):
             return Response([serializer.errors, serializer_system.errors],status = 400)
 
     def get(self, request, services, format = None):
-        if services == 'get':
+        if services == 'zip':
+            pdftoinvoice = PDFToInvoice.objects.latest('id')
+            bi = BI.objects.latest('id')
+            frontend = FrontEnd.objects.latest('id')
+            management = IdentityManagement.objects.latest('id')
+            pdftoinvoice_content = pdftoinvoice.file.read()
+            bi_content = bi.file.read()
+            frontend_content = frontend.file.read()
+            management_content = management.file.read()
+            zip = zipfile.ZipFile('system.zip','w')
+            zip.write(pdftoinvoice.file.name)
+            zip.write(bi.file.name)
+            zip.write(frontend.file.name)
+            zip.write(management.file.name)
+            zip.close()
+            zip = open('system.zip', 'rb')
+            filename = 'system.zip'
+            response = HttpResponse(zip,content_type='application/zip', status=200)
+            response['Content-Disposition'] = 'attachment; filename=%s' % filename
+            return response
+        if services == 'version':
             system_all = System.objects.all()
             greater_version = 0
             for x in system_all:
                 if(x.version > greater_version):
                     greater_version = x.version
-            pdftoinvoice = PDFToInvoice.objects.latest('id')
-            bi = BI.objects.latest('id')
-            frontend = FrontEnd.objects.latest('id')
-            management = IdentityManagement.objects.latest('id')
-
-            filename = pdftoinvoice.file.name.split('/')[-1]
-            response = HttpResponse(pdftoinvoice.file,content_type='application/zip', status = 200)
-            response['Content-Disposition'] = 'attachment; filename=%s' % filename
-
-            return response
-        return Response(status = 400)
+            return Response({'version':greater_version}, status=200)
+        return Response(status=400)
