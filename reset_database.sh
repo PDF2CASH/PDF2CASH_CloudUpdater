@@ -9,5 +9,5 @@ do
 done
 
 rm -rf db.sqlite3
-docker-compose run web  ./manage.py makemigrations
+docker-compose run web ./manage.py makemigrations
 docker-compose run web ./manage.py migrate
