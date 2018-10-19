@@ -8,6 +8,6 @@ do
     sudo rm -rf $app/migrations/__pycache__
 done
 
-rm -rf mydatabase
-python manage.py makemigrations
-python manage.py migrate
+rm -rf db.sqlite3
+docker-compose run web ./manage.py makemigrations
+docker-compose run web ./manage.py migrate
