@@ -3,8 +3,9 @@ from .models import (
     PDFToInvoice,
     BI,
     FrontEnd,
-    IdentityManagement,
-    System
+    APIGateway,
+    System,
+    Parser,
 )
 
 
@@ -26,13 +27,19 @@ class BISerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class IdentityManagementSerializer(serializers.ModelSerializer):
+class APIGatewaySerializer(serializers.ModelSerializer):
     class Meta:
-        model = IdentityManagement
+        model = APIGateway
         fields = '__all__'
 
 
 class FrontEndSerializer(serializers.ModelSerializer):
     class Meta:
         model = FrontEnd
+        fields = '__all__'
+
+
+class ParserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Parser
         fields = '__all__'

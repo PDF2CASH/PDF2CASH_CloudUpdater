@@ -9,8 +9,8 @@ class PDFToInvoice(models.Model):
     file = models.FileField(upload_to='system/documents/PDFToInvoice/')
 
 
-class IdentityManagement(models.Model):
-    file = models.FileField(upload_to='system/documents/IdentityManagement/')
+class APIGateway(models.Model):
+    file = models.FileField(upload_to='system/documents/APIGateway/')
 
 
 class BI(models.Model):
@@ -19,3 +19,7 @@ class BI(models.Model):
 
 class FrontEnd(models.Model):
     file = models.FileField(upload_to='system/documents/FrontEnd/')
+
+
+class Parser(models.Model):
+    file = models.FileField(upload_to='system/documents/Parser/')
