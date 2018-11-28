@@ -4,15 +4,17 @@ from .models import (
     PDFToInvoice,
     BI,
     FrontEnd,
-    IdentityManagement,
-    System
+    APIGateway,
+    System,
+    Parser,
 )
 from .serializers import (
     PDFToInvoiceSerializer,
     BISerializer,
     FrontEndSerializer,
-    IdentityManagementSerializer,
-    SystemSerializer
+    APIGatewaySerializer,
+    SystemSerializer,
+    ParserSerializer,
 )
 from django.http import HttpResponse
 import zipfile
@@ -30,8 +32,10 @@ class SystemView(APIView):
             serializer = BISerializer(data=dict_file)
         elif services == 'frontend':
             serializer = FrontEndSerializer(data=dict_file)
-        elif services == 'management':
-            serializer = IdentityManagementSerializer(data=dict_file)
+        elif services == 'apigateway':
+            serializer = APIGatewaySerializer(data=dict_file)
+        elif services == 'parser':
+            serializer = ParserSerializer(data=dict_file)
         else:
             return Response(status=400)
         system_all = System.objects.all()
@@ -52,12 +56,14 @@ class SystemView(APIView):
             pdftoinvoice = PDFToInvoice.objects.latest('id')
             bi = BI.objects.latest('id')
             frontend = FrontEnd.objects.latest('id')
-            management = IdentityManagement.objects.latest('id')
+            apigateway = APIGateway.objects.latest('id')
+            parser = Parser.objects.latest('id')
             zip = zipfile.ZipFile('system.zip', 'w')
             zip.write(pdftoinvoice.file.name)
             zip.write(bi.file.name)
             zip.write(frontend.file.name)
-            zip.write(management.file.name)
+            zip.write(apigateway.file.name)
+            zip.write(parser.file.name)
             zip.close()
             zip = open('system.zip', 'rb')
             filename = 'system.zip'

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-apps="$(ls -d */ | grep PDF2CASH_PDFToInvoice -v)"
+apps="$(ls -d */ | grep PDF2CASH_CloudUpdater -v)"
 
 for app in ${apps[@]}
 do
@@ -8,6 +8,5 @@ do
     sudo rm -rf $app/migrations/__pycache__
 done
 
-rm -rf db.sqlite3
-docker-compose run web ./manage.py makemigrations
-docker-compose run web ./manage.py migrate
+sudo docker-compose run web ./manage.py makemigrations
+sudo docker-compose run web ./manage.py migrate

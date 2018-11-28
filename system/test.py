@@ -23,13 +23,13 @@ class SystemTest(TestCase):
         self.assertEqual(response.status_code,  200)
 
     def test_post_4(self):
-        url = '/api/system/management/'
+        url = '/api/system/apigateway/'
         file = open("system/test.zip", 'rb')
         response = self.client.post(url, {'file': file}, format='multipart')
         self.assertEqual(response.status_code,  200)
 
     def test_version(self):
-        url = '/api/system/management/'
+        url = '/api/system/apigateway/'
         file = open("system/test.zip", 'rb')
         response = self.client.post(url, {'file': file}, format='multipart')
         self.assertEqual(json.loads(response.content)[1]['version'], 1)
@@ -48,7 +48,10 @@ class SystemTest(TestCase):
         url = '/api/system/frontend/'
         file = open("system/test.zip", 'rb')
         response = self.client.post(url, {'file': file}, format='multipart')
-        url = '/api/system/management/'
+        url = '/api/system/apigateway/'
+        file = open("system/test.zip", 'rb')
+        response = self.client.post(url, {'file': file}, format='multipart')
+        url = '/api/system/parser/'
         file = open("system/test.zip", 'rb')
         response = self.client.post(url, {'file': file}, format='multipart')
         url = '/api/system/zip/'
@@ -56,4 +59,4 @@ class SystemTest(TestCase):
         self.assertNotEquals(response.content, b'')
         url = '/api/system/version/'
         response = self.client.get(url)
-        self.assertEquals(json.loads(response.content)['version'], 4)
+        self.assertEquals(json.loads(response.content)['version'], 5)
